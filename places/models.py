@@ -11,3 +11,11 @@ class Location(models.Model):
     def __str__(self):
         return self.title
 
+
+class Picture(models.Model):
+    number = models.AutoField(verbose_name='Номер картинки', primary_key=True, unique=True)
+    location = models.ForeignKey(Location, on_delete=models.DO_NOTHING, null=True)
+    image = models.ImageField(upload_to='./static/images/')
+
+    def __str__(self):
+        return f'{self.number} - {self.location}'
