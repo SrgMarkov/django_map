@@ -1,18 +1,21 @@
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.template import loader
+from .models import Location
+
+features = []
+locations = Location.objects.all()
+for location in locations:
+    feature = {"type": "Feature", "geometry": {"type": "Point", "coordinates": [location.lng, location.lat]},
+               "properties": {"title": location.title,
+                              "placeId": location.id,
+                              "detailsUrl": f"./static/places/{location.id}.json"}}
+    features.append(feature)
 
 
-feature_1 = {"type": "Feature", "geometry": {"type": "Point", "coordinates": [37.62, 55.793676]},
-             "properties": {"title": "«Легенды Москвы",
-                            "placeId": "moscow_legends",
-                            "detailsUrl": "./static/places/moscow_legends.json"}}
-
-feature_2 = {"type": "Feature", "geometry": {"type": "Point", "coordinates": [37.64, 55.753676]},
-             "properties": {"title": "Крыши24.рф",
-                            "placeId": "roofs24",
-                            "detailsUrl": "./static/places/roofs24.json"}}
-
-features = [feature_1, feature_2]
+def show_location_properties(request, location_id):
+    template = get_object_or_404(Location, id=location_id)
+    return HttpResponse(template.title)
 
 
 def show_map(request):
