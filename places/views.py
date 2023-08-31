@@ -11,7 +11,7 @@ def get_features() -> dict:
         feature = {"type": "Feature", "geometry": {"type": "Point", "coordinates": [location.lng, location.lat]},
                    "properties": {"title": location.title,
                                   "placeId": location.id,
-                                  "detailsUrl": f"./static/places/{location.id}.json"}}
+                                  "detailsUrl": f"places/{location.id}"}}
         features.append(feature)
     return {"type": "FeatureCollection", "features": features}
 
