@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from places import views
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -24,5 +24,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.show_map),
-    path('places/<int:location_id>/', views.show_location_properties)
+    path('places/<int:location_id>/', views.show_location_properties),
+    path('tinymce/', include('tinymce.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
