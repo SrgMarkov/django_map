@@ -10,24 +10,24 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
+from environs import Env
 from pathlib import Path
-from dotenv import load_dotenv
+
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = env.str('SECRET_KEY', 'REPLACE_ME')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = str(os.environ.get('DEBUG')) == 1
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split()
+DEBUG = env.bool('DEBUG', True)
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', [])
 
-print(DEBUG)
 # Application definition
 
 INSTALLED_APPS = [
@@ -86,10 +86,10 @@ WSGI_APPLICATION = 'django_map.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': env.str(
+            'DATABASE_FILEPATH', os.path.join(BASE_DIR, 'db.sqlite3')),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
