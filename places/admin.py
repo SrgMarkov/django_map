@@ -27,4 +27,5 @@ class Locations(SortableAdminBase, admin.ModelAdmin):
         PicturesInline,
     ]
     list_display = ['title']
+    search_fields = ['title']
 
