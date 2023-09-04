@@ -16,6 +16,10 @@ class Picture(models.Model):
     number = models.AutoField(verbose_name='Номер картинки', primary_key=True, unique=True)
     location = models.ForeignKey(Location, on_delete=models.DO_NOTHING, null=True)
     image = models.ImageField()
+    picture_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['picture_order']
 
     def __str__(self):
         return f'{self.number} - {self.location}'

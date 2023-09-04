@@ -1,9 +1,11 @@
+from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminBase, SortableTabularInline, \
+    SortableStackedInline
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import Location, Picture
 
 
-class PicturesInline(admin.TabularInline):
+class PicturesInline(SortableStackedInline):
     model = Picture
     readonly_fields = ['preview_image']
 
@@ -21,7 +23,7 @@ class PicturesInline(admin.TabularInline):
 
 
 @admin.register(Location)
-class Locations(admin.ModelAdmin):
+class Locations(SortableAdminBase, admin.ModelAdmin):
     inlines = [
         PicturesInline,
     ]
