@@ -2,7 +2,7 @@ import os
 import requests
 from django import db
 from django.core.management.base import BaseCommand
-from places.models import Location, Picture
+from places.models import Location
 
 
 class Command(BaseCommand):
