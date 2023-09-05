@@ -2,6 +2,14 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from django.core.management.base import BaseCommand
+
+
+class Command(BaseCommand):
+    help = 'The Zen of Python'
+
+    def handle(self, *args, **options):
+        pass
 
 
 def main():

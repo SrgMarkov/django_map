@@ -15,7 +15,7 @@ class Location(models.Model):
 
 class Picture(models.Model):
     number = models.AutoField(verbose_name='Номер картинки', primary_key=True, unique=True)
-    location = models.ForeignKey(Location, on_delete=models.DO_NOTHING, null=True)
+    location = models.ForeignKey(Location, related_name='image', on_delete=models.DO_NOTHING, null=True)
     image = models.ImageField()
     picture_order = models.PositiveIntegerField(default=0)
 
