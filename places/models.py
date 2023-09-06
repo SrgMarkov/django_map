@@ -17,7 +17,7 @@ class Picture(models.Model):
     number = models.AutoField(verbose_name='Номер картинки', primary_key=True, unique=True)
     location = models.ForeignKey(Location, verbose_name='Локация', related_name='images', on_delete=models.DO_NOTHING)
     image = models.ImageField(verbose_name='Изображение')
-    picture_order = models.PositiveIntegerField(verbose_name='Позиция', default=0, blank=True)
+    picture_order = models.PositiveIntegerField(verbose_name='Позиция', default=0, blank=True, db_index=True)
 
     class Meta:
         ordering = ['picture_order']
