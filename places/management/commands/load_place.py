@@ -23,8 +23,8 @@ class Command(BaseCommand):
         place_description = response.json()
         try:
             Location.objects.get_or_create(title=place_description['title'],
-                                           description_short=place_description['description_short'],
-                                           description_long=place_description['description_long'],
+                                           short_description=place_description['description_short'],
+                                           long_description=place_description['description_long'],
                                            lat=place_description['coordinates']['lat'],
                                            lng=place_description['coordinates']['lng']
                                            )

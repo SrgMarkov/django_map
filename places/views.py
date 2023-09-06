@@ -25,8 +25,8 @@ def show_location_properties(request, location_id):
         location_images.append(image.image.url)
     location_description = {"title": location.title,
                             "imgs": location_images,
-                            "description_short": location.description_short,
-                            "description_long": location.description_long,
+                            "short_description": location.short_description,
+                            "long_description": location.long_description,
                             "coordinates": {
                                 "lng": location.lng,
                                 "lat": location.lat
