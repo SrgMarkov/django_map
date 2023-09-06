@@ -2,7 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.template import loader
 
-from .models import Location, Picture
+from .models import Location
 
 
 def get_features() -> dict:
@@ -18,8 +18,7 @@ def get_features() -> dict:
 
 def show_location_properties(request, location_id):
     location = get_object_or_404(Location, id=location_id)
-    images = Picture.objects.filter(location=location)
-    location_images = [image.image.url for image in images]
+    location_images = [image.image.url for image in location.images.all()]
     location_description = {"title": location.title,
                             "imgs": location_images,
                             "short_description": location.short_description,
