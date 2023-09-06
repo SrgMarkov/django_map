@@ -1,5 +1,5 @@
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render
 from django.template import loader
 
 from .models import Location
@@ -31,7 +31,5 @@ def show_location_properties(request, location_id):
 
 
 def show_map(request):
-    template = loader.get_template('index.html')
     context = {'places_geo': get_features()}
-    rendered_page = template.render(context, request)
-    return HttpResponse(rendered_page)
+    return render(request, 'index.html', context=context)
