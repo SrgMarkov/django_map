@@ -5,6 +5,11 @@ from django.utils.html import format_html
 from .models import Location, Picture
 
 
+@admin.register(Picture)
+class Pictures(admin.ModelAdmin):
+    list_display = ['location', 'image']
+    
+
 class PicturesInline(SortableStackedInline):
     model = Picture
     readonly_fields = ['preview_image']
@@ -29,4 +34,7 @@ class Locations(SortableAdminBase, admin.ModelAdmin):
     ]
     list_display = ['title']
     search_fields = ['title']
+    
+
+
 

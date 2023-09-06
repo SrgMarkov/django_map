@@ -22,4 +22,4 @@ class Picture(models.Model):
         ordering = ['picture_order']
 
     def __str__(self):
-        return f'{self.number} - {self.location}'
+        return f'{self.image} - {self.location}'
