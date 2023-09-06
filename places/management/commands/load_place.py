@@ -40,4 +40,4 @@ class Command(BaseCommand):
             with open(f'media/{image_name}', 'wb') as image_file:
                 for chunk in image_response.iter_content(chunk_size=512):
                     image_file.write(chunk)
-            place.image.create(image=image_name)
+            place.images.create(image=image_name)
