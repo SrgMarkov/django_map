@@ -8,7 +8,7 @@ from .models import Location, Picture
 @admin.register(Picture)
 class Pictures(admin.ModelAdmin):
     list_display = ['location', 'image']
-    
+
 
 class PicturesInline(SortableStackedInline):
     model = Picture
@@ -21,7 +21,8 @@ class PicturesInline(SortableStackedInline):
         output_resolution[image_resolution.index(min(image_resolution))] = \
             (min(image_resolution) * 200) / max(image_resolution)
 
-        return format_html('<img src="{url}" width="{width}" height={height} />'.format(
+        return format_html('<img src="{url}" width="{width}" \
+                           height={height} />'.format(
             url=obj.image.url,
             width=output_resolution[0],
             height=output_resolution[1]))
@@ -34,7 +35,3 @@ class Locations(SortableAdminBase, admin.ModelAdmin):
     ]
     list_display = ['title']
     search_fields = ['title']
-    
-
-
-
