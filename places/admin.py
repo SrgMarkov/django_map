@@ -7,7 +7,8 @@ from .models import Location, Picture
 
 @admin.register(Picture)
 class Pictures(admin.ModelAdmin):
-    list_display = ['location', 'image']
+    list_display = ['location', 'image', ]
+    autocomplete_fields = ['location']
 
 
 class PicturesInline(SortableStackedInline):
