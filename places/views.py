@@ -6,16 +6,14 @@ from .models import Location
 
 
 def get_features(request) -> dict:
-    features = []
-    for location in Location.objects.all():
-        feature = {"type": "Feature", "geometry": {
-                   "type": "Point",
-                   "coordinates": [location.lng, location.lat]},
-                   "properties": {"title": location.title,
-                                  "placeId": location.id,
-                                  "detailsUrl": reverse('places',
-                                                        args=(location.id,))}}
-        features.append(feature)
+    features = [{"type": "Feature", "geometry": {
+                 "type": "Point",
+                 "coordinates": [location.lng, location.lat]},
+                 "properties": {"title": location.title,
+                                "placeId": location.id,
+                                "detailsUrl": reverse('places',
+                                                      args=(location.id,))}}
+                for location in Location.objects.all()]
     return {"type": "FeatureCollection", "features": features}
 
 
