@@ -1,8 +1,6 @@
-import os
-
 import requests
 from django.core.management.base import BaseCommand
-
+from django.core.files.base import ContentFile
 from places.models import Location
 
 
@@ -19,21 +17,19 @@ class Command(BaseCommand):
         response = requests.get(options['download_url'])
         response.raise_for_status()
         place_description = response.json()
-        Location.objects.\
+        place, create = Location.objects.\
             get_or_create(title=place_description['title'],
                           defaults={
-                          'short_description': place_description['description_short'],
-                          'long_description': place_description['description_long'],
+                          'short_description':
+                              place_description['description_short'],
+                          'long_description':
+                              place_description['description_long'],
                           'lat': place_description['coordinates']['lat'],
                           'lng': place_description['coordinates']['lng']})
-        place_images = place_description['imgs']
-        place = Location.objects.get(title=place_description['title'])
-        for image in place_images:
-            image_name = image.split('/')[-1]
-            os.makedirs('media', exist_ok=True)
-            image_response = requests.get(image, stream=True)
-            image_response.raise_for_status()
-            with open(f'media/{image_name}', 'wb') as image_file:
-                for chunk in image_response.iter_content(chunk_size=512):
-                    image_file.write(chunk)
-            place.images.create(image=image_name)
+        if create:
+            for image in place_description['imgs']:
+                image_name = image.split('/')[-1]
+                image_response = requests.get(image)
+                image_response.raise_for_status()
+                place.images.create(image=ContentFile(image_response.content,
+                                                      name=image_name))
