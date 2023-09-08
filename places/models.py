@@ -20,12 +20,12 @@ class Picture(models.Model):
                                  related_name='images',
                                  on_delete=models.DO_NOTHING)
     image = models.ImageField(verbose_name='Изображение')
-    picture_order = models.PositiveIntegerField(verbose_name='Позиция',
-                                                default=0, blank=True,
-                                                db_index=True)
+    order = models.PositiveIntegerField(verbose_name='Позиция',
+                                        default=0, blank=True,
+                                        db_index=True)
 
     class Meta:
-        ordering = ['picture_order']
+        ordering = ['order']
 
     def __str__(self):
         return f'{self.image} - {self.location}'
