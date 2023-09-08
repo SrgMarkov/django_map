@@ -18,8 +18,7 @@ def get_features(request) -> dict:
 
 
 def show_location_properties(request, location_id):
-    location = get_object_or_404(Location.objects.prefetch_related('images'),\
-                                 id=location_id)
+    location = get_object_or_404(Location.objects.prefetch_related('images'), id=location_id)
 
     location_images = [image.image.url for image in location.images.all()]
     location_description = {"title": location.title,

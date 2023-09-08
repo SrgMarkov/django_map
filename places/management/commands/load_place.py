@@ -1,7 +1,6 @@
 import os
 
 import requests
-from django import db
 from django.core.management.base import BaseCommand
 
 from places.models import Location
@@ -10,7 +9,6 @@ from places.models import Location
 class Command(BaseCommand):
     help = '''
     Command to upload locations from JSON files
-    
     add JSON URL as positional argument
     '''
 
@@ -21,15 +19,13 @@ class Command(BaseCommand):
         response = requests.get(options['download_url'])
         response.raise_for_status()
         place_description = response.json()
-        try:
-            Location.objects.get_or_create(title=place_description['title'],
-                                           short_description=place_description['description_short'],
-                                           long_description=place_description['description_long'],
-                                           lat=place_description['coordinates']['lat'],
-                                           lng=place_description['coordinates']['lng']
-                                           )
-        except db.IntegrityError:
-            print('This location already exists. Tittle must be unique')
+        Location.objects.\
+            get_or_create(title=place_description['title'],
+                          defaults={
+                          'short_description': place_description['description_short'],
+                          'long_description': place_description['description_long'],
+                          'lat': place_description['coordinates']['lat'],
+                          'lng': place_description['coordinates']['lng']})
         place_images = place_description['imgs']
         place = Location.objects.get(title=place_description['title'])
         for image in place_images:
